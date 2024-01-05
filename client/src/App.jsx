@@ -8,6 +8,8 @@ import Header from "./components/Header";
 import PrivateRoute from "./components/PrivateRoute";
 import CreateListing from "./pages/CreateListing";
 import UpdateListing from "./pages/UpdateListing";
+import CreateEstateAgency from "./pages/CreateEstateAgency";
+import AddEstateAgentToEstateAgency from "./pages/AddEstateAgentToEstateAgency";
 import Listing from "./pages/Listing";
 import Search from "./pages/Search";
 import AddClient from "./pages/AddClient";
@@ -32,6 +34,14 @@ export default function App() {
             element={<UpdateListing />}
           />
           <Route path="/add-client" element={<AddClient />} />
+          <Route
+            path="/create-estate-agency"
+            element={<CreateEstateAgency />}
+          />
+          <Route
+            path="/add-estate-agent-to-estate-agency"
+            element={<AddEstateAgentToEstateAgency />}
+          />
         </Route>
       </Routes>
     </BrowserRouter>
