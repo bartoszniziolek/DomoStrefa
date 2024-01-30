@@ -27,7 +27,11 @@ export default function SignUp() {
         },
         body: JSON.stringify({
           ...formData,
-          role: currentUser.role === "admin" ? "estateAgent" : "client",
+          role: currentUser?.role
+            ? currentUser.role === "admin"
+              ? "estateAgent"
+              : "client"
+            : "client",
         }),
       });
       const data = await res.json();
@@ -51,42 +55,42 @@ export default function SignUp() {
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="text"
-          placeholder="nazwa użytkownika"
+          placeholder="Nazwa użytkownika"
           className="border p-3 rounded-lg"
           id="username"
           onChange={handleChange}
         />
         <input
           type="text"
-          placeholder="imię"
+          placeholder="Imię"
           className="border p-3 rounded-lg"
           id="firstName"
           onChange={handleChange}
         />
         <input
           type="text"
-          placeholder="nazwisko"
+          placeholder="Nazwisko"
           className="border p-3 rounded-lg"
           id="lastName"
           onChange={handleChange}
         />
         <input
           type="email"
-          placeholder="email"
+          placeholder="Adres e-mail"
           className="border p-3 rounded-lg"
           id="email"
           onChange={handleChange}
         />
         <input
           type="text"
-          placeholder="numer telefonu"
+          placeholder="Numer telefonu"
           className="border p-3 rounded-lg"
           id="phoneNumber"
           onChange={handleChange}
         />
         <input
           type="password"
-          placeholder="hasło"
+          placeholder="Hasło"
           className="border p-3 rounded-lg"
           id="password"
           onChange={handleChange}

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const listingSchema = new mongoose.Schema(
   {
@@ -10,32 +10,12 @@ const listingSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    address: {
-      type: String,
-      required: true,
-    },
     regularPrice: {
       type: Number,
       required: true,
     },
     discountPrice: {
       type: Number,
-      required: true,
-    },
-    bathrooms: {
-      type: Number,
-      required: true,
-    },
-    bedrooms: {
-      type: Number,
-      required: true,
-    },
-    furnished: {
-      type: Boolean,
-      required: true,
-    },
-    parking: {
-      type: Boolean,
       required: true,
     },
     type: {
@@ -54,10 +34,26 @@ const listingSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    additionDate: {
+      type: Date,
+      required: true,
+    },
+    expirationDate: {
+      type: Date,
+      required: true,
+    },
+    status: {
+      type: String,
+      required: true,
+    },
+    property: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );
 
-const Listing = mongoose.model('Listing', listingSchema);
+const Listing = mongoose.model("Listing", listingSchema);
 
 export default Listing;

@@ -6,6 +6,8 @@ import authRouter from "./routes/auth.route.js";
 import listingRouter from "./routes/listing.route.js";
 import clientRouter from "./routes/client.route.js";
 import estateAgencyRouter from "./routes/estateAgency.route.js";
+import propertyRouter from "./routes/property.route.js";
+import favouriteListingRouter from "./routes/favouriteListing.route.js";
 import cookieParser from "cookie-parser";
 import path from "path";
 dotenv.config();
@@ -36,6 +38,8 @@ app.use("/api/auth", authRouter);
 app.use("/api/listing", listingRouter);
 app.use("/api/client", clientRouter);
 app.use("/api/estate-agency", estateAgencyRouter);
+app.use("/api/property", propertyRouter);
+app.use("/api/favourite", favouriteListingRouter);
 
 app.use(express.static(path.join(__dirname, "/client/dist")));
 

@@ -194,7 +194,7 @@ export default function Profile() {
         </p>
         <input
           type="text"
-          placeholder="nazwa użytkownika"
+          placeholder="Nazwa użytkownika"
           defaultValue={currentUser.username}
           id="username"
           className="border p-3 rounded-lg"
@@ -202,7 +202,7 @@ export default function Profile() {
         />
         <input
           type="email"
-          placeholder="email"
+          placeholder="Adres e-mail"
           id="email"
           defaultValue={currentUser.email}
           className="border p-3 rounded-lg"
@@ -210,7 +210,7 @@ export default function Profile() {
         />
         <input
           type="password"
-          placeholder="hasło"
+          placeholder="Hasło"
           onChange={handleChange}
           id="password"
           className="border p-3 rounded-lg"
@@ -226,6 +226,12 @@ export default function Profile() {
           to={"/create-listing"}
         >
           Dodaj ogłoszenie
+        </Link>
+        <Link
+          className="bg-slate-700 text-white p-3 rounded-lg uppercase text-center hover:opacity-95"
+          to={"/favourites-listings"}
+        >
+          Ulubione ogłoszenia
         </Link>
       </form>
       <div className="flex justify-between mt-5">

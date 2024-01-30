@@ -8,25 +8,26 @@ import {
 import { app } from "../firebase";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import moment from "moment";
 
 export default function CreateListing() {
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const params = useParams();
   const [files, setFiles] = useState([]);
+  const [property, setProperty] = useState("");
+  const [properties, setProperties] = useState([]);
   const [formData, setFormData] = useState({
     imageUrls: [],
     name: "",
     description: "",
-    address: "",
     type: "rent",
-    bedrooms: 1,
-    bathrooms: 1,
     regularPrice: 50,
     discountPrice: 0,
     offer: false,
-    parking: false,
-    furnished: false,
+    property: "",
+    expirationDate: new Date().toISOString().slice(0, 10),
+    status: "active",
   });
   const [imageUploadError, setImageUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -38,11 +39,16 @@ export default function CreateListing() {
       const listingId = params.listingId;
       const res = await fetch(`/api/listing/get/${listingId}`);
       const data = await res.json();
+      console.log(data);
       if (data.success === false) {
         console.log(data.message);
         return;
       }
-      setFormData(data);
+      const dataWithDate = {
+        ...data,
+        expirationDate: moment(data.expirationDate).format("YYYY-MM-DD"),
+      };
+      setFormData(dataWithDate);
     };
 
     fetchListing();
@@ -116,6 +122,13 @@ export default function CreateListing() {
       });
     }
 
+    if (e.target.id === "expirationDate") {
+      setFormData({
+        ...formData,
+        expirationDate: e.target.value,
+      });
+    }
+
     if (
       e.target.id === "parking" ||
       e.target.id === "furnished" ||
@@ -156,6 +169,7 @@ export default function CreateListing() {
         body: JSON.stringify({
           ...formData,
           userRef: currentUser._id,
+          property: property._id,
         }),
       });
       const data = await res.json();
@@ -178,7 +192,7 @@ export default function CreateListing() {
         <div className="flex flex-col gap-4 flex-1">
           <input
             type="text"
-            placeholder="Tytuł"
+            placeholder="Tytuł ogłoszenia"
             className="border p-3 rounded-lg"
             id="name"
             maxLength="62"
@@ -189,21 +203,22 @@ export default function CreateListing() {
           />
           <textarea
             type="text"
-            placeholder="Opis"
+            placeholder="Opis ogłoszenia"
             className="border p-3 rounded-lg"
             id="description"
             required
             onChange={handleChange}
             value={formData.description}
           />
+          <span className="ml-2">Data wygaśnięcia:</span>
           <input
-            type="text"
-            placeholder="Adres"
+            type="date"
+            placeholder="Data ważności"
             className="border p-3 rounded-lg"
-            id="address"
+            id="expirationDate"
             required
             onChange={handleChange}
-            value={formData.address}
+            value={formData.expirationDate}
           />
           <div className="flex gap-6 flex-wrap">
             <div className="flex gap-2">
@@ -229,26 +244,6 @@ export default function CreateListing() {
             <div className="flex gap-2">
               <input
                 type="checkbox"
-                id="parking"
-                className="w-5"
-                onChange={handleChange}
-                checked={formData.parking}
-              />
-              <span>Miejsce parkingowe</span>
-            </div>
-            <div className="flex gap-2">
-              <input
-                type="checkbox"
-                id="furnished"
-                className="w-5"
-                onChange={handleChange}
-                checked={formData.furnished}
-              />
-              <span>Wykończony</span>
-            </div>
-            <div className="flex gap-2">
-              <input
-                type="checkbox"
                 id="offer"
                 className="w-5"
                 onChange={handleChange}
@@ -258,32 +253,6 @@ export default function CreateListing() {
             </div>
           </div>
           <div className="flex flex-wrap gap-6">
-            <div className="flex items-center gap-2">
-              <input
-                type="number"
-                id="bedrooms"
-                min="1"
-                max="200"
-                required
-                className="p-3 border border-gray-300 rounded-lg"
-                onChange={handleChange}
-                value={formData.bedrooms}
-              />
-              <p>Powierzchnia (m²)</p>
-            </div>
-            <div className="flex items-center gap-2">
-              <input
-                type="number"
-                id="bathrooms"
-                min="1"
-                max="10"
-                required
-                className="p-3 border border-gray-300 rounded-lg"
-                onChange={handleChange}
-                value={formData.bathrooms}
-              />
-              <p>Liczba pokoi</p>
-            </div>
             <div className="flex items-center gap-2">
               <input
                 type="number"

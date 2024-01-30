@@ -50,28 +50,28 @@ export default function CreateEstateAgency() {
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="text"
-          placeholder="nazwa agencji"
+          placeholder="Nazwa agencji"
           className="border p-3 rounded-lg"
           id="name"
           onChange={handleChange}
         />
         <input
           type="text"
-          placeholder="adres agencji"
+          placeholder="Adres agencji"
           className="border p-3 rounded-lg"
           id="address"
           onChange={handleChange}
         />
         <input
           type="text"
-          placeholder="numer telefonu"
+          placeholder="Numer telefonu"
           className="border p-3 rounded-lg"
           id="phoneNumber"
           onChange={handleChange}
         />
         <input
           type="text"
-          placeholder="email"
+          placeholder="Adres e-mail"
           className="border p-3 rounded-lg"
           id="email"
           onChange={handleChange}
@@ -79,7 +79,7 @@ export default function CreateEstateAgency() {
 
         <button
           disabled={loading}
-          className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+          className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80 mt-5"
         >
           {loading ? "Ładowanie..." : "Dodaj agencję nieruchomości"}
         </button>

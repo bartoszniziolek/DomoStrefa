@@ -29,6 +29,27 @@ export default function Listing() {
   const params = useParams();
   const { currentUser } = useSelector((state) => state.user);
 
+  const addToFavourites = async () => {
+    try {
+      const res = await fetch(`/api/favourite/add`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          listingRef: params.listingId,
+          userRef: currentUser._id,
+        }),
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     const fetchListing = async () => {
       try {
@@ -78,9 +99,7 @@ export default function Listing() {
               onClick={() => {
                 navigator.clipboard.writeText(window.location.href);
                 setCopied(true);
-                setTimeout(() => {
-                  setCopied(false);
-                }, 2000);
+                addToFavourites();
               }}
             />
           </div>
@@ -100,7 +119,7 @@ export default function Listing() {
             </p>
             <p className="flex items-center mt-6 gap-2 text-slate-600  text-sm">
               <FaMapMarkerAlt className="text-green-700" />
-              {listing.address}
+              {listing.property.address}
             </p>
             <div className="flex gap-4">
               <p className="bg-red-900 w-full max-w-[200px] text-white text-center p-1 rounded-md">
@@ -119,25 +138,25 @@ export default function Listing() {
             <ul className="text-green-900 font-semibold text-sm flex flex-wrap items-center gap-4 sm:gap-6">
               <li className="flex items-center gap-1 whitespace-nowrap ">
                 <CgArrowsExpandLeft className="text-lg" />
-                {listing.bedrooms > 1
-                  ? `${listing.bedrooms} m² `
-                  : `${listing.bedrooms} m² `}
+                {listing.property.area > 1
+                  ? `${listing.property.area} m² `
+                  : `${listing.property.area} m² `}
               </li>
               <li className="flex items-center gap-1 whitespace-nowrap ">
                 <MdBedroomParent className="text-lg" />
-                {listing.bathrooms > 1
-                  ? `${listing.bathrooms} pokoi `
-                  : `${listing.bathrooms} pokój `}
+                {listing.property.numberOfRooms > 1
+                  ? `${listing.property.numberOfRooms} pokoi `
+                  : `${listing.property.numberOfRooms} pokój `}
               </li>
               <li className="flex items-center gap-1 whitespace-nowrap ">
                 <FaParking className="text-lg" />
-                {listing.parking
+                {listing.property.parking
                   ? "Miejsce parkingowe"
                   : "Brak miejsca parkingowego"}
               </li>
               <li className="flex items-center gap-1 whitespace-nowrap ">
                 <FaChair className="text-lg" />
-                {listing.furnished ? "Wykończony" : "Niewykończony"}
+                {listing.property.furnished ? "Wykończony" : "Niewykończony"}
               </li>
             </ul>
             {currentUser && listing.userRef !== currentUser._id && !contact && (
