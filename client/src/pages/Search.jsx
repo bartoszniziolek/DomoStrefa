@@ -184,29 +184,6 @@ export default function Search() {
               <span>Oferta</span>
             </div>
           </div>
-          <div className="flex gap-2 flex-wrap items-center">
-            <label className="font-semibold">Udogodnienia:</label>
-            <div className="flex gap-2">
-              <input
-                type="checkbox"
-                id="parking"
-                className="w-5"
-                onChange={handleChange}
-                checked={sidebardata.parking}
-              />
-              <span>Parking</span>
-            </div>
-            <div className="flex gap-2">
-              <input
-                type="checkbox"
-                id="furnished"
-                className="w-5"
-                onChange={handleChange}
-                checked={sidebardata.furnished}
-              />
-              <span>Wykończony</span>
-            </div>
-          </div>
           <div className="flex items-center gap-2">
             <label className="font-semibold">Sortowanie:</label>
             <select
